@@ -6,6 +6,8 @@
     <color name="colorVIP">#FFD600</color>
     <color name="colorBackground">#F4F4F4</color>
     <color name="surface">#FFFFFF</color>
-    <color name="colorError">#CC0000</color>
-    <color name="textOverPrimary">#FFFFFF</color>
+    <color name="colorError">#B00020</color>
+    <color name="textWhite">#FFFFFF</color>
+    <color name="textHighEmphasis">#DF000000</color>
+    <color name="textMediumEmphasis">#99000000</color>
 </resources>

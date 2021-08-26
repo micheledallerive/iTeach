@@ -8,4 +8,12 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="fontWeight">500</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/primary_button</item>
+    </style>
+
 </resources>
