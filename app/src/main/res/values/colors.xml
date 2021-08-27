@@ -10,4 +10,7 @@
     <color name="textWhite">#FFFFFF</color>
     <color name="textHighEmphasis">#DF000000</color>
     <color name="textMediumEmphasis">#99000000</color>
+    <color name="google">#EA4335</color>
+    <color name="facebook">#428BCA</color>
+    <color name="twitter">#5BC0DE</color>
 </resources>

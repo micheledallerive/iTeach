@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:sl_shadow_angle="90"
-    app:sl_shadow_color="#9C1E88E5"
-    app:sl_shadow_distance="5dp"
-    app:sl_shadow_radius="16dp"
+    app:sl_shadow_color="#9A1E88E5"
+    app:sl_shadow_distance="4dp"
+    app:sl_shadow_radius="12dp"
     app:sl_shadowed="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/ivYourImageName"
+        android:id="@+id/material_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="AVANTI"

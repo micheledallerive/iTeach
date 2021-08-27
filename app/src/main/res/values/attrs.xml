@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PrimaryButton">
+        <attr name="text" format="string"/>
+        <attr name="backgroundTint" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="SocialButton">
+        <attr name="social" format="enum">
+            <enum name="google" value="0"/>
+            <enum name="facebook" value="1"/>
+            <enum name="twitter" value="2"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

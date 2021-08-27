@@ -2,15 +2,21 @@ package it.micheledallerive.iteach;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import it.micheledallerive.iteach.custom.PrimaryButton;
 
 public class FirstScreen extends AppCompatActivity {
 
@@ -26,9 +32,10 @@ public class FirstScreen extends AppCompatActivity {
         put("Albert Einstein", "Sembra sempre impossibile fino a quando non è fatto.");
     }};
 
-    ScheduledThreadPoolExecutor executor;
+    Timer timer;
     TextView mFrase;
     TextView mAutore;
+    PrimaryButton mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +44,57 @@ public class FirstScreen extends AppCompatActivity {
 
         mFrase = findViewById(R.id.frase_textview);
         mAutore = findViewById(R.id.autore_textview);
+        mButton = findViewById(R.id.button);
 
         setupFrasi();
+
+        final Intent i = new Intent(this, LoginActivity.class);
+        mButton.setOnClickListener(v -> {
+            v.getContext().startActivity(i);
+            finish();
+        });
     }
 
     private void setupFrasi(){
-        executor = new ScheduledThreadPoolExecutor(1);
-        executor.scheduleAtFixedRate(()->{
-            int index = (new Random()).nextInt(frasi.size());
-            String autore = (String)frasi.keySet().toArray()[index];
-            String frase = frasi.get(autore);
-            mFrase.setText(frase);
-            mAutore.setText(autore);
-        }, 0, 5, TimeUnit.SECONDS);
+        timer = new Timer();
+        final int shortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_mediumAnimTime);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                int index = (new Random()).nextInt(frasi.size());
+                String autore = (String)frasi.keySet().toArray()[index];
+                String frase = frasi.get(autore);
+                mFrase.animate().alpha(0f).setDuration(shortAnimationDuration).setListener(null);
+                mAutore.animate().alpha(0f).setDuration(shortAnimationDuration).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        runOnUiThread(()->{
+                            mFrase.setText(frase);
+                            mAutore.setText("- "+autore);
+
+                            mFrase.animate().alpha(1f).setDuration(shortAnimationDuration).setListener(null);
+                            mAutore.animate().alpha(1f).setDuration(shortAnimationDuration).setListener(null);
+                        });
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+            }
+        }, 0, 7500);
+
     }
 }
