@@ -64,6 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginHorizontal="8dp"
+        app:text="Avanti"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

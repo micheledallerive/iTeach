@@ -37,10 +37,14 @@ public class FirstScreen extends AppCompatActivity {
     TextView mAutore;
     PrimaryButton mButton;
 
+    FirstScreen instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
+
+        instance = this;
 
         mFrase = findViewById(R.id.frase_textview);
         mAutore = findViewById(R.id.autore_textview);
@@ -50,8 +54,8 @@ public class FirstScreen extends AppCompatActivity {
 
         final Intent i = new Intent(this, LoginActivity.class);
         mButton.setOnClickListener(v -> {
-            v.getContext().startActivity(i);
-            finish();
+            instance.startActivity(i);
+            instance.finish();
         });
     }
 

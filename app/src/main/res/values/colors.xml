@@ -2,14 +2,22 @@
 <resources>
     <color name="colorPrimary">#1E88E5</color>
     <color name="colorPrimaryDark">#005CB2</color>
-    <color name="colorAccent">#8E24AA</color>
+    <color name="colorPrimaryDisabled">#5088BA</color>
+    <color name="colorAccent">#F1228D</color>
     <color name="colorVIP">#FFD600</color>
     <color name="colorBackground">#F4F4F4</color>
-    <color name="surface">#FFFFFF</color>
+
     <color name="colorError">#B00020</color>
+    <color name="colorSuccess">#22BB33</color>
+
+    <color name="surface">#FFFFFF</color>
+
+
     <color name="textWhite">#FFFFFF</color>
     <color name="textHighEmphasis">#DF000000</color>
     <color name="textMediumEmphasis">#99000000</color>
+
+
     <color name="google">#EA4335</color>
     <color name="facebook">#428BCA</color>
     <color name="twitter">#5BC0DE</color>

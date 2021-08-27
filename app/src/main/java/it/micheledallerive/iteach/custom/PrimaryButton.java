@@ -16,6 +16,7 @@ import com.gigamole.library.ShadowLayout;
 import com.google.android.material.button.MaterialButton;
 
 import it.micheledallerive.iteach.R;
+import it.micheledallerive.iteach.Utils;
 
 public class PrimaryButton extends FrameLayout {
 
@@ -29,9 +30,11 @@ public class PrimaryButton extends FrameLayout {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PrimaryButton, 0, 0);
         String text="";
         int backgroundTint=-1;
+        boolean enabled=true;
         try{
             text = a.getString(R.styleable.PrimaryButton_text);
             backgroundTint = a.getColor(R.styleable.PrimaryButton_backgroundTint, getResources().getColor(R.color.colorPrimary, context.getTheme()));
+            enabled = a.getBoolean(R.styleable.PrimaryButton_enabled, true);
         }catch(Exception e){e.printStackTrace();
         }
 
@@ -40,6 +43,7 @@ public class PrimaryButton extends FrameLayout {
 
         mButton.setText(text);
         setButtonColor(mButton, backgroundTint);
+        mButton.setEnabled(enabled);
     }
 
     protected void inflateLayout(){
@@ -53,20 +57,18 @@ public class PrimaryButton extends FrameLayout {
     }
 
     protected void setButtonColor(MaterialButton button, int color){
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_enabled}, // enabled
-                new int[] {-android.R.attr.state_enabled}, // disabled
-                new int[] {-android.R.attr.state_checked}, // unchecked
-                new int[] { android.R.attr.state_pressed}  // pressed
-        };
+        ColorStateList colors = Utils.createColorStateList(color);
+        button.setBackgroundTintList(colors);
+        mShadowLayout.setShadowColor(ColorUtils.setAlphaComponent(color, 125));
+    }
 
-        int[] colors = new int[] {
-                color,
-                color,
-                color,
-                color
-        };
-        button.setBackgroundTintList(new ColorStateList(states,colors));
-        mShadowLayout.setShadowColor(ColorUtils.setAlphaComponent(color, 153));
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        mButton.setEnabled(enabled);
+    }
+
+    public void setText(String text){
+        mButton.setText(text);
     }
 }
