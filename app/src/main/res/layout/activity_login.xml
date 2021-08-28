@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progress"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:indicatorColor="@color/colorAccent"
-        android:alpha="0"
-        />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/email_container"
         android:layout_width="match_parent"
@@ -53,6 +43,8 @@
 
                 app:startIconDrawable="@drawable/ic_mail"
                 app:startIconTint="@color/textMediumEmphasis"
+
+                app:endIconMode="custom"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -79,6 +71,11 @@
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
 
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorIconDrawable="@drawable/ic_error"
+                app:errorIconTint="@color/colorError"
+                app:errorTextColor="@color/colorError"
+
                 android:visibility="gone"
                 android:alpha="0"
 
@@ -92,6 +89,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
         </LinearLayout>
 
@@ -127,7 +126,9 @@
             app:layout_constraintTop_toBottomOf="@id/fields_layout"
             app:text="Avanti"
             app:enabled="false"
+            android:layout_marginTop="8dp"
             />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

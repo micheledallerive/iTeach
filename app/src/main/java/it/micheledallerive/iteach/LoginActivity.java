@@ -1,11 +1,18 @@
 package it.micheledallerive.iteach;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -24,7 +31,7 @@ import it.micheledallerive.iteach.custom.PrimaryButton;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private enum ButtonFunction{
+    private enum mButtonFunction{
         LOGIN,
         REGISTRAZIONE
     }
@@ -36,9 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText mPasswordInput;
 
     private PrimaryButton mButton;
-    private ProgressBar mProgress;
 
-    private ButtonFunction buttonFunction;
+    private mButtonFunction mButtonFunction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mButton = findViewById(R.id.button);
 
-        mProgress = findViewById(R.id.progress);
-
-        buttonFunction = ButtonFunction.REGISTRAZIONE;
+        mButtonFunction = mButtonFunction.REGISTRAZIONE;
 
         // Setup dell'input della mail
         mEmailInput.addTextChangedListener(new TextWatcher() {
@@ -67,13 +71,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean validEmail = validateEmail(s.toString());
+                if(mButtonFunction==mButtonFunction.LOGIN){ // Se sto modificando la mail quando è già in modalità "LOGIN", torno in modalità registrazione e controllo la nuova email
+                    mPasswordLayout.setVisibility(View.GONE);
+                    Utils.animateAlpha(mPasswordLayout, 0f, "medium"); // nascondo il campo password
+                    mButtonFunction = mButtonFunction.REGISTRAZIONE; // imposto il pulsante in modalita registrazione (solo email)
+                    mButton.setText("Avanti"); // cambio il testo del pulsante
+                }
                 if(!validEmail){ // Indirizzo email non valido
                     mButton.setEnabled(false);
                     mEmailLayout.setError("L'indirizzo email non è valido");
-                    Utils.animateAlpha(mProgress, 0f, "short");
                 }else{ // Indirizzo email valido, procedo a verifica se esiste l'account
                     mEmailLayout.setErrorEnabled(false);
-                    checkExistingAccount();
+                    checkExistingAccount(); // controllo se effettivamente esiste l'account
                 }
             }
 
@@ -82,10 +91,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+         // Setup dell'input della password (cancella l'errore di login fallito quando la modifico)
+        mPasswordInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(mPasswordLayout.isErrorEnabled()) mPasswordLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         // Setup del click del pulsante
         mButton.setOnClickListener((v)->{
-            switch(buttonFunction){
+            System.out.println(mButtonFunction);
+            switch(mButtonFunction){
                 case LOGIN:
+                    loginFailed();
                     break;
                 case REGISTRAZIONE:
                     break;
@@ -94,27 +123,64 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    Timer existingTimer = null;
+
     private void checkExistingAccount(){
-        Utils.animateAlpha(mProgress, 0f, "short");
-        Utils.animateAlpha(mProgress, 1f, "medium"); // mostro la ProgressBar in alto per mostrare che sto cercando se l'account esiste
+        startEmailLoading();
+        if(existingTimer!=null){ // se la mail viene modificata prima che la precedente richiesta di controllo si sia conclusa bisogna annullarla
+            existingTimer.cancel();
+            existingTimer=null;
+        }
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                Utils.animateAlpha(mProgress, 0f, "short"); // nascondo la ProgressBar
                 runOnUiThread(()->mButton.setEnabled(true)); // attivo il pulsante
 
                 // MAIL TROVATA
-                buttonFunction = ButtonFunction.LOGIN;
-                mButton.setText("Login");
+                mButtonFunction = mButtonFunction.LOGIN; // imposto il pulsante in modalità LOGIN
 
+                mButton.setText("Login");
                 runOnUiThread(()->mPasswordLayout.setVisibility(View.VISIBLE));
-                Utils.animateAlpha(mPasswordLayout, 1f, "medium");
+                Utils.animateAlpha(mPasswordLayout, 1f, "medium"); // mostro il campo "Password" per inserire la password del login
+
+                stopEmailLoading(); // ho finito di controllare la mail, posso togliere la progressbar nella mail
+
+                existingTimer=null;
             }
         }, 3000);
+        existingTimer=t;
+    }
+
+    private void startEmailLoading(){
+        Handler h = new Handler();
+        h.postDelayed(
+                ()->{
+                    CircularProgressDrawable progressDrawable = new CircularProgressDrawable(this);
+                    progressDrawable.setStyle(CircularProgressDrawable.LARGE);
+                    progressDrawable.setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+                    progressDrawable.start(); // creo e avvio la progressbar circolare
+                    runOnUiThread(()->mEmailLayout.setEndIconDrawable(progressDrawable)); // imposto la progressbar come icona nella mail mentre controllo se esiste
+                }, 100
+        );
+    }
+
+    private void stopEmailLoading(){
+        runOnUiThread(()->{
+            mEmailLayout.setEndIconDrawable(null);
+            mEmailLayout.setEndIconVisible(true);
+        });
     }
 
     private boolean validateEmail(String email){
         return EmailValidator.getInstance().isValid(email);
+    }
+
+    private void loginSuccess(){
+
+    }
+
+    private void loginFailed(){
+        mPasswordLayout.setError("Le credenziali inserite non sono corrette");
     }
 }
