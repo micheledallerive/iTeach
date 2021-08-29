@@ -60,10 +60,12 @@ public class SocialButton extends PrimaryButton {
 
     @Override
     protected void setButtonColor(MaterialButton button, int color) {
+        super.setButtonColor(button,color);
+        /*
         mButton.setStrokeColor(Utils.createColorStateList(color));
         mButton.setTextColor(color);
         mButton.setRippleColor(Utils.createColorStateList(ColorUtils.blendARGB(color, Color.BLACK, 0.3f)));
-        mShadowLayout.setShadowColor(ColorUtils.setAlphaComponent(color, 130));
+        mShadowLayout.setShadowColor(ColorUtils.setAlphaComponent(color, 130));*/
     }
 
     @Override

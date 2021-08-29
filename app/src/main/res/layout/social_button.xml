@@ -33,16 +33,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
 
             app:backgroundTint="@android:color/white"
 
             android:text="Accedi con google"
-            android:textColor="@color/facebook"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/PrimaryButton"
             android:outlineProvider="none"
-
-            android:paddingVertical="8dp"
 
             app:cornerRadius="64dp"
             app:strokeColor="@color/google"
