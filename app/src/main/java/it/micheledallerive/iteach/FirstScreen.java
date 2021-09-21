@@ -106,6 +106,6 @@ public class FirstScreen extends AppCompatActivity {
                 });
             }
         }, 0, 7500);
-
+eskereee
     }
 }
