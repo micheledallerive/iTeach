@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".tutor.TutorCreateAnnuncioFragment"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/icon_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp"
+        >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/icon_cancel"
+
+            android:background="@drawable/ic_clear"
+            android:backgroundTint="@color/textHighEmphasis"
+            />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_confirm"
+            android:id="@+id/icon_delete"
+
+            android:background="@drawable/ic_delete"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/colorError"
+            />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/icon_confirm"
+
+            android:background="@drawable/ic_tick"
+            android:backgroundTint="@color/colorSuccess"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/icon_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
+        android:paddingHorizontal="24dp"
+        android:scrollbarStyle="outsideInset"
+
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="8dp"
+        android:overScrollMode="never"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:hint="Titolo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/title_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/materia_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_layout"
+                android:layout_marginTop="24dp"
+
+                android:hint="Materia"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/materia_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:id="@+id/divider_1"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@id/materia_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="24dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/divider_1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/offro_lezioni_title"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/textMediumEmphasis"
+                android:text="Offro lezioni"
+                android:textFontWeight="400"
+                android:textSize="20sp"
+
+                />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/offro_lezioni_chips"
+                app:layout_constraintTop_toBottomOf="@id/offro_lezioni_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"
+                app:chipSpacingHorizontal="32dp"
+                app:singleSelection="true"
+                >
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_individuali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Individuali"
+                    style="@style/Chip.Choice"
+                    android:checked="true"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_di_gruppo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Di gruppo"
+                    style="@style/Chip.Choice"
+                    />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:id="@+id/divider_2"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@id/offro_lezioni_chips"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="24dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/divider_2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/sono_disponibile_title"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/textMediumEmphasis"
+                android:text="Sono disponibile"
+                android:textFontWeight="400"
+                android:textSize="20sp"
+
+                />
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/sono_disponibile_scroll"
+
+                android:scrollbarSize="2dp"
+                android:overScrollMode="never"
+                android:requiresFadingEdge="horizontal"
+                android:fadingEdgeLength="8dp"
+
+                app:layout_constraintTop_toBottomOf="@id/sono_disponibile_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"
+                >
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sono_disponibile_chips"
+                    app:singleLine="true"
+                    app:selectionRequired="true"
+                    app:chipSpacingHorizontal="16dp"
+                    >
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_online"
+                        style="@style/Chip.Filter"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Online"/>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_in_presenza"
+                        style="@style/Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="In presenza"/>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_spostarmi"
+                        style="@style/Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Per spostarmi"/>
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spostamento_inputs_layout"
+                android:alpha="0"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/sono_disponibile_scroll"
+                android:layout_marginTop="24dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/max_spostamento_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    android:hint="Posso spostarmi per..."
+                    app:suffixText="km"
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/max_spostamento_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/costo_spostamento_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/max_spostamento_layout"
+                    android:layout_marginTop="24dp"
+
+                    android:hint="Costo spostamento"
+                    app:prefixText="+"
+                    app:suffixText="€"
+
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/costo_spostamento_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:id="@+id/divider_3"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@id/spostamento_inputs_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="24dp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/indirizzo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/divider_3"
+                android:layout_marginTop="24dp"
+
+                android:hint="Indirizzo dove farai lezione"
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/indirizzo_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/prezzo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/indirizzo_layout"
+                android:layout_marginTop="24dp"
+
+                android:hint="Prezzo"
+                app:suffixText="€/h"
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/prezzo_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
-package it.micheledallerive.iteach;
+package it.micheledallerive.iteach.utils;
 
+import android.animation.Animator;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.View;
@@ -26,6 +27,10 @@ public class Utils {
     }
 
     public static void animateAlpha(View view, float toAlpha, String duration){
+        animateAlpha(view,toAlpha,duration,null);
+    }
+
+    public static void animateAlpha(View view, float toAlpha, String duration, Animator.AnimatorListener listener){
         int durationId=android.R.integer.config_shortAnimTime;
         switch(duration){
             case "short":
@@ -38,8 +43,8 @@ public class Utils {
                 durationId = android.R.integer.config_longAnimTime;
                 break;
         }
-        long durationFloat = view.getResources().getInteger(durationId);
-        view.animate().alpha(toAlpha).setDuration(durationFloat).setListener(null);
+        long durationFloat = view.getContext().getResources().getInteger(durationId);
+        view.animate().alpha(toAlpha).setDuration(durationFloat).setListener(listener);
     }
 
 }

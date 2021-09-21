@@ -16,7 +16,9 @@
     <color name="textWhite">#FFFFFF</color>
     <color name="textHighEmphasis">#DF000000</color>
     <color name="textMediumEmphasis">#99000000</color>
+    <color name="textLowEmphasis">#61000000</color>
 
+    <color name="divider">#14212121</color>
 
     <color name="google">#EA4335</color>
     <color name="facebook">#1877F2</color>

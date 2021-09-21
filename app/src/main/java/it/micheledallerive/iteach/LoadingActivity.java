@@ -5,23 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import it.micheledallerive.iteach.utils.LoginUtils;
+
 public class LoadingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-        goToFirstScreen();
     }
 
-    private void goToFirstScreen(){
-        Intent i = new Intent(this, FirstScreen.class);
-        startActivity(i);
-        finish();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LoginUtils.checkAlreadyLoggedIn(this);
     }
-/*
-    private void goToMain(){
-        Intent i = new Intent(this, );
-        startActivity(i);
-    }*/
 }

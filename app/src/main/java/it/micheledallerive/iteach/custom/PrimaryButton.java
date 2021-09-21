@@ -3,11 +3,7 @@ package it.micheledallerive.iteach.custom;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
@@ -17,7 +13,7 @@ import com.gigamole.library.ShadowLayout;
 import com.google.android.material.button.MaterialButton;
 
 import it.micheledallerive.iteach.R;
-import it.micheledallerive.iteach.Utils;
+import it.micheledallerive.iteach.utils.Utils;
 
 public class PrimaryButton extends FrameLayout {
 

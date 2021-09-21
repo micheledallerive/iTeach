@@ -1,33 +1,26 @@
 package it.micheledallerive.iteach;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 
-import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.android.material.progressindicator.CircularProgressIndicatorSpec;
-import com.google.android.material.progressindicator.IndeterminateDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.w3c.dom.Text;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import it.micheledallerive.iteach.custom.PrimaryButton;
+import it.micheledallerive.iteach.utils.Callback;
+import it.micheledallerive.iteach.utils.LoginUtils;
+import it.micheledallerive.iteach.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,6 +28,15 @@ public class LoginActivity extends AppCompatActivity {
         LOGIN,
         REGISTRAZIONE
     }
+
+    private enum EmailCheckResult{
+        NOT_REGISTERED,
+        REGISTERED_WITH_GOOGLE,
+        REGISTERED_WITH_FACEBOOK,
+        REGISTERED_WITH_TWITTER
+    }
+
+    private FirebaseAuth mAuth;
 
     private TextInputLayout mEmailLayout;
     private TextInputEditText mEmailInput;
@@ -46,10 +48,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private mButtonFunction mButtonFunction;
 
+    private LoginActivity activityInstance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        activityInstance = this;
+
+        mAuth = FirebaseAuth.getInstance();
 
         mEmailLayout = findViewById(R.id.email_layout);
         mEmailInput = findViewById(R.id.email_input);
@@ -82,7 +90,36 @@ public class LoginActivity extends AppCompatActivity {
                     mEmailLayout.setError("L'indirizzo email non è valido");
                 }else{ // Indirizzo email valido, procedo a verifica se esiste l'account
                     mEmailLayout.setErrorEnabled(false);
-                    checkExistingAccount(); // controllo se effettivamente esiste l'account
+                    checkExistingAccount(s.toString(), new Callback() { // controllo se effettivamente esiste l'account
+                        @Override
+                        public void onSuccess(Object obj) { // se trovo un account registrato con questo indirizzo email
+
+                            runOnUiThread(()->mButton.setEnabled(true)); // attivo il pulsante
+
+                            mButtonFunction = mButtonFunction.LOGIN; // imposto il pulsante in modalità LOGIN
+                            mButton.setText("Login");
+
+                            runOnUiThread(()->mPasswordLayout.setVisibility(View.VISIBLE));
+                            Utils.animateAlpha(mPasswordLayout, 1f, "medium"); // mostro il campo "Password" per inserire la password del login
+
+                        }
+
+                        @Override
+                        public void onFailure(Object obj) { // se non lo trovo
+                            EmailCheckResult result = (EmailCheckResult) obj;
+                            switch(result){
+                                case NOT_REGISTERED:
+                                    mPasswordLayout.setError("La password inserita non è corretta");
+                                    break;
+                                case REGISTERED_WITH_FACEBOOK:
+                                    break;
+                                case REGISTERED_WITH_GOOGLE:
+                                    break;
+                                case REGISTERED_WITH_TWITTER:
+                                    break;
+                            }
+                        }
+                    });
                 }
             }
 
@@ -111,10 +148,20 @@ public class LoginActivity extends AppCompatActivity {
 
         // Setup del click del pulsante
         mButton.setOnClickListener((v)->{
-            System.out.println(mButtonFunction);
             switch(mButtonFunction){
                 case LOGIN:
-                    loginFailed();
+
+                    mAuth.signInWithEmailAndPassword(mEmailInput.getText().toString(), mPasswordInput.getText().toString()).addOnCompleteListener(task -> {
+                       if(task.isSuccessful()){
+                           // LOGIN EFFETTUATO, VAI OLTRE
+                           System.out.println("LOGIN EFFETTUATO: "+task.getResult().getUser().getUid());
+                           LoginUtils.updateAfterLogin(activityInstance, task.getResult().getUser());
+                       }else{
+                           // LOGIN FALLITO
+                           System.out.println(task.getException().getMessage());
+                       }
+                    });
+
                     break;
                 case REGISTRAZIONE:
                     break;
@@ -123,33 +170,25 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    Timer existingTimer = null;
 
-    private void checkExistingAccount(){
-        startEmailLoading();
-        if(existingTimer!=null){ // se la mail viene modificata prima che la precedente richiesta di controllo si sia conclusa bisogna annullarla
-            existingTimer.cancel();
-            existingTimer=null;
-        }
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(()->mButton.setEnabled(true)); // attivo il pulsante
 
-                // MAIL TROVATA
-                mButtonFunction = mButtonFunction.LOGIN; // imposto il pulsante in modalità LOGIN
+    private void checkExistingAccount(String email, Callback callback){
+        startEmailLoading(); // mostro la progressbar per far capire che sto caricando qualcosa lol
 
-                mButton.setText("Login");
-                runOnUiThread(()->mPasswordLayout.setVisibility(View.VISIBLE));
-                Utils.animateAlpha(mPasswordLayout, 1f, "medium"); // mostro il campo "Password" per inserire la password del login
-
-                stopEmailLoading(); // ho finito di controllare la mail, posso togliere la progressbar nella mail
-
-                existingTimer=null;
+        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener((task)->{
+            if(task.isSuccessful() && email.equals(mEmailInput.getText().toString())){ // SE riesco a controllare se l'email è registrata E la mail che ho controllato è la stessa che c'è ora
+                if(task.getResult().getSignInMethods()!=null){
+                    if(task.getResult().getSignInMethods().contains("password")){
+                        callback.onSuccess(null);
+                    }else if(task.getResult().getSignInMethods().size()>0){
+                        // CONTROLLO SE è REGISTRATO CON GOOGLE, FACEBOOK, TWITTER ETC
+                    }else{
+                        callback.onFailure(EmailCheckResult.NOT_REGISTERED);
+                    }
+                }
             }
-        }, 3000);
-        existingTimer=t;
+            stopEmailLoading(); // ho finito di controllare la mail, posso togliere la progressbar
+        });
     }
 
     private void startEmailLoading(){

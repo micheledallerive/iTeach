@@ -10,9 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".user.UserActivity"></activity>
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".TutorActivity" />
+        <activity android:name=".tutor.TutorActivity" />
         <activity android:name=".FirstScreen" />
         <activity android:name=".LoadingActivity">
             <intent-filter>

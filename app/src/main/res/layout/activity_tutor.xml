@@ -4,5 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".TutorActivity">
+    tools:context=".tutor.TutorActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/fragment_container"
+        />
+
+    <com.gigamole.library.ShadowLayout
+        android:id="@+id/shadowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:sl_shadow_angle="270"
+        app:sl_shadowed="true"
+        app:sl_shadow_distance="1dp"
+        app:sl_shadow_radius="8dp"
+        app:sl_shadow_color="#801E88E5"
+        >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:id="@+id/navigation_bar"
+            android:elevation="0dp"
+            app:elevation="0dp"
+
+            app:menu="@menu/tutor_navigation_menu"
+            app:itemIconTint="@color/nav_selector"
+            app:itemRippleColor="@color/colorPrimaryDark"
+
+            app:labelVisibilityMode="unlabeled"
+
+            android:background="@drawable/nav_rounded"
+            app:backgroundTint="@color/colorPrimary"
+            />
+
+    </com.gigamole.library.ShadowLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

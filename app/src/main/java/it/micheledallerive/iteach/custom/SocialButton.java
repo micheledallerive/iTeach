@@ -2,18 +2,13 @@ package it.micheledallerive.iteach.custom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.core.graphics.ColorUtils;
-
 import com.google.android.material.button.MaterialButton;
 
 import it.micheledallerive.iteach.R;
-import it.micheledallerive.iteach.Utils;
 
 public class SocialButton extends PrimaryButton {
 

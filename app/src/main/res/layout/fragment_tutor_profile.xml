@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground"
+    tools:context=".tutor.profile.TutorProfileFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:id="@+id/card"
+        android:background="@color/surface"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="4dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/icons"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="16dp"
+                >
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    android:id="@+id/icon_qr"
+                    android:src="@drawable/ic_qr"
+                    android:tint="@color/textHighEmphasis"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@android:color/transparent"
+
+                    android:foreground="@drawable/ripple"
+                    android:clickable="true"
+                    />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    android:id="@+id/icon_settings"
+                    android:src="@drawable/ic_settings"
+                    android:tint="@color/textHighEmphasis"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="@android:color/transparent"
+
+                    android:foreground="@drawable/ripple"
+                    android:clickable="true"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/icons"
+                android:layout_marginTop="16dp"
+                android:id="@+id/nome"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    android:textSize="28sp"
+                    android:textFontWeight="600"
+                    android:text="Nome Cognome"
+                    android:textColor="@color/textHighEmphasis"
+
+                    android:id="@+id/nome_text"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/nome_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp"
+
+                    android:id="@+id/email_text"
+
+                    android:textAllCaps="true"
+                    android:textColor="@color/textMediumEmphasis"
+                    android:textFontWeight="500"
+                    android:textSize="16sp"
+                    android:text="indirizzo@email.com"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical"
+                android:id="@+id/list"
+                app:layout_constraintTop_toBottomOf="@id/nome"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/row_statistiche"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="24dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/icon_statistiche"
+
+                        android:backgroundTint="@color/textHighEmphasis"
+                        android:background="@drawable/ic_statistics"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/icon_statistiche"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:text="Statistiche"
+                        android:textSize="18sp"
+                        android:textFontWeight="500"
+                        android:textColor="@color/textHighEmphasis"
+                        />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        android:paddingVertical="2dp"
+                        android:src="@drawable/ic_next"
+                        android:tint="@color/textHighEmphasis"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/row_livello"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="24dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/icon_livello"
+
+                        android:padding="4dp"
+                        android:src="@drawable/ic_level"
+                        android:tint="@color/textHighEmphasis"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/icon_livello"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:text="Livello"
+                        android:textSize="18sp"
+                        android:textFontWeight="500"
+                        android:textColor="@color/textHighEmphasis"
+                        />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="32dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        android:paddingVertical="2dp"
+                        android:src="@drawable/ic_next"
+                        android:backgroundTint="@color/textHighEmphasis"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:id="@+id/propic"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/card"
+        app:layout_constraintTop_toTopOf="@id/card"
+        android:elevation="4dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
